@@ -20,7 +20,7 @@ export default function EditRecord() {
     useEffect(() => {
          
         fetchData();
-    }, [id]);
+    }, [id, fetchData]);
 
    
 
