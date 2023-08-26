@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import { Link, useParams } from "react-router-dom";
 
 export default function EditRecord() {
-    const { id } = useParams(); // Get the id from the URL parameter
+    const { id } = useParams();
     const [record, setRecord] = useState({});
     
-    // Function to fetch data from the backend
-    const fetchData = () => {
+    const fetchData = useCallback(() => {
         axios.get(`http://localhost:3030/user/${id}`)
             .then((res) => {
                 setRecord(res.data);
@@ -15,12 +14,11 @@ export default function EditRecord() {
             .catch((err) => {
                 console.log(err);
             });
-    };
+    }, [id]);
 
     useEffect(() => {
-         
         fetchData();
-    }, [id, fetchData]);
+    }, [fetchData]);
 
    
 
