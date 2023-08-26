@@ -6,20 +6,21 @@ export default function EditRecord() {
     const { id } = useParams(); // Get the id from the URL parameter
     const [record, setRecord] = useState({});
     
+    // Function to fetch data from the backend
+    const fetchData = () => {
+        axios.get(`http://localhost:3030/user/${id}`)
+            .then((res) => {
+                setRecord(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     useEffect(() => {
-         // Function to fetch data from the backend
-        const fetchData = () => {
-            axios.get(`http://localhost:3030/user/${id}`)
-                .then((res) => {
-                    setRecord(res.data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        };
+         
         fetchData();
-    }, []);
+    }, [id]);
 
    
 
