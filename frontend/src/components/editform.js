@@ -7,7 +7,7 @@ export default function EditRecord() {
     const [record, setRecord] = useState({});
     
     const fetchData = useCallback(() => {
-        axios.get(`http://localhost:3030/user/${id}`)
+        axios.get(`https://expensetracker-sa5w.onrender.com/${id}`)
             .then((res) => {
                 setRecord(res.data);
             })
@@ -34,7 +34,7 @@ export default function EditRecord() {
         };
 
         // Make a PUT request to update the record
-        axios.put(`http://localhost:3030/user/${id}`, updatedRecord)
+        axios.put(`https://expensetracker-sa5w.onrender.com/${id}`, updatedRecord)
             .then(() => {
                 console.log("Record updated successfully!");
                 // Redirect back to the records list page
