@@ -15,7 +15,7 @@ export default function Records(){
 
     // Function to fetch data from the backend
     const fetchData = () => {
-        axios.get("http://localhost:3030/user")
+        axios.get("https://expensetracker-sa5w.onrender.com")
             .then((res) => {
                 setRecord(res.data);
             })
@@ -25,7 +25,7 @@ export default function Records(){
     };
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:3030/user/${id}`)
+        axios.delete(`https://expensetracker-sa5w.onrender.com/${id}`)
             .then(() => {
                 fetchData();
             })
