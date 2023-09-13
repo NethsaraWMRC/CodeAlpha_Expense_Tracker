@@ -18,7 +18,7 @@ export default function AddRecord(){
            
         }
 
-        axios.post("http://localhost:3030/user",newRecord).then(()=>{
+        axios.post("https://expensetracker-sa5w.onrender.com",newRecord).then(()=>{
             alert("Record added successfully!");
             document.getElementById("price").value="";
             document.getElementById("description").value="";
