@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import axios from 'axios';
 
+const URL = "http://localhost:3030/user"
+
 export default function AddRecord(){
 
     let [price,setPrice] = useState("");
@@ -18,7 +20,7 @@ export default function AddRecord(){
            
         }
 
-        axios.post("https://expensetracker-sa5w.onrender.com",newRecord).then(()=>{
+        axios.post(URL,newRecord).then(()=>{
             alert("Record added successfully!");
             document.getElementById("price").value="";
             document.getElementById("description").value="";

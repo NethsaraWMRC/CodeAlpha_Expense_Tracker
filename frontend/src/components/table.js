@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
-
+const URL = "http://localhost:3030/user"
 
 
 export default function Records(){
@@ -15,7 +15,7 @@ export default function Records(){
 
     // Function to fetch data from the backend
     const fetchData = () => {
-        axios.get("https://expensetracker-sa5w.onrender.com")
+        axios.get(URL)
             .then((res) => {
                 setRecord(res.data);
             })
@@ -25,7 +25,7 @@ export default function Records(){
     };
 
     const handleDelete = (id) => {
-        axios.delete(`https://expensetracker-sa5w.onrender.com/${id}`)
+        axios.delete(`${URL}/${id}`)
             .then(() => {
                 fetchData();
             })

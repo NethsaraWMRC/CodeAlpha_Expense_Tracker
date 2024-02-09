@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import { Link, useParams } from "react-router-dom";
+const URL = "http://localhost:3030/user"
 
 export default function EditRecord() {
     const { id } = useParams();
     const [record, setRecord] = useState({});
     
     const fetchData = useCallback(() => {
-        axios.get(`https://expensetracker-sa5w.onrender.com/${id}`)
+        axios.get(`${URL}/${id}`)
             .then((res) => {
                 setRecord(res.data);
             })
