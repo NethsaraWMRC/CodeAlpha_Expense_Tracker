@@ -5,7 +5,7 @@ import logout from '../../assests/shutdown.png'
 
 function SideBar() {
   return (
-    <Box sx={{display:'flex', flexDirection:'column', maxWidth:'345px',height:'100vh'}}>
+    <Box sx={{display:'flex', flexDirection:'column', minWidth:'345px',height:'100vh'}}>
         <Box sx={{display:'flex',position:'relative', flexDirection:'column', maxWidth:'345px', backgroundColor:'white', alignItems:'center', padding:'30px',height:'100vh' }}>
             <Box sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
                 <Box sx={{height:'150px', width:'150px', borderRadius:'200px', backgroundColor:'blue',overflow:'hidden',}}>
