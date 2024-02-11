@@ -14,18 +14,14 @@ app.use(bodyparser.json());
 const URL = process.env.MONGODB_URL;
 
 
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  //   useCreateIndex: true,
-  //   useFindAndModify: false,
-  });
+mongoose.connect(URL);
 
   
 const connection = mongoose.connection;
 
-const userRouter = require("./routes/userRoutes.js");
-app.use("/user",userRouter);
+const recordRouter = require("./routes/recordsRoutes");
+
+app.use("/record",recordRouter);
 
 connection.once("open", ()=>{
     console.log("MongoDB connection successful!");

@@ -51,7 +51,7 @@ const rows = [
   createData('found', 900, 'income'),
 ];
 
-export default function DataTable() {
+export default function DataTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -74,6 +74,7 @@ export default function DataTable() {
   const handleEdit = (index) => {
     // Implement edit functionality here using the index
     console.log('Edit row at index:', index);
+    props.recordEdit(true)
   };
 
   const handleCategoryFilterClick = (event) => {
@@ -140,7 +141,7 @@ export default function DataTable() {
                         <TableCell key={column.id} align={column.align}>
                           {column.id === 'Options' ? (
                             <Box>
-                              <IconButton aria-label="delete" onClick={() => handleEdit(rowIndex)}>
+                              <IconButton aria-label="edit" onClick={() => handleEdit(rowIndex)}>
                                 <Edit />
                               </IconButton>
                               
@@ -150,7 +151,7 @@ export default function DataTable() {
                             </Box>
                           ) : (
                             column.id === 'category' ? (
-                              <span style={{ color: value === 'expense' ? 'red' : 'green' }}>{value}</span>
+                              <span style={{ color: value === 'income' ? '#00DD3E' : '#FF7043' }}>{value}</span>
                             ) : (
                               column.format && typeof value === 'number' ? column.format(value) : value
                             )
