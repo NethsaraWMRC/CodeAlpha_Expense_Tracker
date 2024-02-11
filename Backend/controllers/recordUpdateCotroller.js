@@ -3,10 +3,10 @@ const { updateRecord } = require('../services/recordService');
 
 exports.updateRecord = async (req, res)=>{
     const { id } = req.params;
-    const { price, description, currency, category, date } = req.body;
+    const { price, description, category, date } = req.body;
 
     try {
-        const updatedRecord = updateRecord({ price, description, currency, category, date });
+        const updatedRecord = updateRecord({ price, description, category, date });
 
         await record.findByIdAndUpdate(id,updatedRecord);
 

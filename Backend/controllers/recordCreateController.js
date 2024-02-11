@@ -2,8 +2,8 @@ const { createRecord } = require('../services/recordService');
 
 exports.createRecord = async (req, res) => {
     try {
-        const { price, description, currency, category, date } = req.body;
-        const newRecord = createRecord({ price, description, currency, category, date });
+        const { price, description, category, date } = req.body;
+        const newRecord = createRecord({ price, description, category, date });
 
         await newRecord.save();
 

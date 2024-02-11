@@ -13,11 +13,6 @@ const recordSchema = new schema({
         required:true
     },
 
-    currency:{
-        type: String,
-        required:true
-    }, 
-    
     category:{
         type: String,
         required:true

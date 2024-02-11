@@ -1,11 +1,6 @@
 import { Box, MenuItem, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
-const currencies = [
-  { value: 'USD', label: '$' },
-  { value: 'LKR', label: 'Rs.' },
-];
-
 const categories = [
   { value: 'expense', label: 'Expense' },
   { value: 'income', label: 'Income' },
@@ -14,7 +9,6 @@ const categories = [
 function Form(props) {
   const [description, setDescription] = useState('');
   const [prize, setPrice] = useState('');
-  const [currency, setCurrency] = useState('LKR');
   const [selectedCategory, setSelectedCategory] = useState('expense');
 
   const [isDescriptionEmpty, setIsDescriptionEmpty] = useState(false);
@@ -67,25 +61,6 @@ function Form(props) {
             value={prize}
             onChange={(e) => setPrice(e.target.value)}
           />
-        </Box>
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '20px', justifyContent: 'space-between' }}>
-          <Typography sx={{ fontFamily: 'poppins', fontSize: '14px', color: '#101318', width: '120px' }}>Currency</Typography>
-          <Typography>-</Typography>
-          <TextField
-            id="outlined-select-currency"
-            select
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-            variant="outlined"
-            size="small"
-          >
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '20px', justifyContent: 'space-between' }}>
