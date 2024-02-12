@@ -3,10 +3,10 @@ const record = require('../models/record')
 exports.getRecord = async (req, res)=>{
     try{
         const getRecords = await record.find();
-        res.json(getRecords)
+        res.status(201).json(getRecords)
 
     }catch(err){
-        res.json('Record fetch failed', err);
+        res.jstatus(500).json('Record fetch failed', err);
     }
 }
 
@@ -15,9 +15,9 @@ exports.getOneRecord = async (req, res)=>{
 
     try{
         const getRecords = await record.findById(id)
-        res.json(getRecords)
+        res.status(201).json(getRecords)
 
     }catch(err){
-        res.json('Record fetch failed', err);
+        res.status(500).json('Record fetch failed', err);
     }
 }

@@ -16,6 +16,7 @@ function SideBar(props) {
 
     const [ userName, setUserName ] = useState('')
     const [ userId, setUserId ] = useState('');
+    const [userPic, setUserPic] = useState('');
 
     React.useEffect(()=>{
         fetchData();
@@ -27,13 +28,17 @@ function SideBar(props) {
     setRows(data)
   }
 
-  const getUser = async ()=>{
-    const userData = await fetchUser()
-    setUserName(userData[0].userName)
-    setUserId(userData[0]._id)
-  }
-  
-  
+  const getUser = async () => {
+    const userData = await fetchUser();
+    setUserName(userData[0].userName);
+    setUserId(userData[0]._id);
+
+    const blob = new Blob([Int8Array.from(userData[0].proPic.data.data)], {type: userData[0].proPic.contentType });
+
+    const image = window.URL.createObjectURL(blob);
+    setUserPic(image);
+};
+
 
     const handleOpenMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -56,7 +61,7 @@ function SideBar(props) {
             <Box sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
                
                 <Box sx={{height:'150px', width:'150px', borderRadius:'200px',overflow:'hidden', cursor:'pointer', transition:'opacity 0.25s','&:active':{opacity:'0.8'}}}>
-                    <img src={proPic} style={{width:'100%', height:'auto',}} alt='proPic' onClick={handlePress}/>  
+                    <img src={userPic} style={{width:'100%', height:'auto',}} alt='proPic' onClick={handlePress}/>  
                 </Box>
 
                 <Typography sx={{marginTop:'10px', fontFamily:'poppins', fontSize:'18px', fontWeight:'500'}}>{userName}</Typography>

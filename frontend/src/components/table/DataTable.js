@@ -134,6 +134,7 @@ export default function DataTable(props) {
             {rows
               .filter(row => !filterCategory || row.category === filterCategory)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .reverse()
               .map((row, rowIndex) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>

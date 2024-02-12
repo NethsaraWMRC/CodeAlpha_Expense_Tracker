@@ -7,10 +7,10 @@ const userSchema = new schema({
         type:String,
         required:true,
     },
-    // proPic:{
-    //     data: Buffer,
-    //     contentType: String
-    // }
+    proPic:{
+        data: Buffer,
+        contentType: String
+    }
 })
 
 module.exports = mongoose.model('User', userSchema)

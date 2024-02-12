@@ -10,8 +10,6 @@ const categories = [
 
 function Form(props) {
 
-  const date = new Date().toISOString().split('T')[0];
-
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('expense');
@@ -19,10 +17,22 @@ function Form(props) {
   const [isDescriptionEmpty, setIsDescriptionEmpty] = useState(false);
   const [ispriceEmpty, setIsPriceEmpty] = useState(false);
 
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const [date, setDate] = useState(getCurrentDate());
+
   useEffect(()=>{
     if(props.tag==="updateForm"){
       fetchARecord();
     }
+    console.log(date)
+    
   },[props.id])
 
   const fetchARecord = async ()=>{

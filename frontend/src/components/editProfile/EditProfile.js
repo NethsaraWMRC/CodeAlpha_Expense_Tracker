@@ -17,7 +17,7 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 function EditProfile(props) {
-  const [imageUrl, setImageUrl] = useState(null);
+  const [proPic, setProPic] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
   const [userName, setUserName] = useState('');
 
@@ -34,40 +34,38 @@ function EditProfile(props) {
   const handleClosePress = () => {
     props.userAccEdit(false);
     setIsEmpty(false)
-    setImageUrl(null)
+    setProPic(null)
   };
 
   const handleSubmit = async () => {
-    if(imageUrl==null){
-        setIsEmpty(true)
+    if (proPic === null) {
+        setIsEmpty(true);
+    } else {
+        try {
+            const formData = new FormData();
+            formData.append('userName', userName);
+            formData.append('proPic', proPic);
 
-    }else{
+            await updateUser(formData, props.userIdNum);
 
-      try{
-        await updateUser({userName},props.userIdNum);
-        
-        props.userAccEdit(false);
-        console.log('Image URL:', imageUrl);
-        
-        setImageUrl(null)
-        setIsEmpty(false)
+            props.userAccEdit(false);
+            console.log('Image uploaded successfully');
 
-      }catch(err){
-        alert('Error adding user. Please try again later.');
-      }
-    
+            setProPic(null);
+            setIsEmpty(false);
+        } catch (err) {
+            alert('Error uploading image. Please try again later.');
+        }
     }
-    
-  };
+};
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
-      setIsEmpty(false);
-    
-  };
+    setProPic(file);
+    setIsEmpty(false);
+};
+
   
 
   return (
@@ -106,7 +104,7 @@ function EditProfile(props) {
             Upload file
             <VisuallyHiddenInput type="file" onChange={handleFileChange} />
           </Button>
-          {imageUrl && (
+          {proPic && (
             <Box>
                 <Typography>file selected</Typography>
             </Box>

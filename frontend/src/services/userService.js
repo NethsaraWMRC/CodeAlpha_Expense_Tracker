@@ -14,7 +14,11 @@ export const fetchUser = async ()=>{
 
 export const updateUser = async (userData, id)=>{
     try{
-        const response = await axios.put(`${URL}/${id}`, userData);
+        const response = await axios.put(`${URL}/${id}`, userData,{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
         return response.data
     }catch(err){
         throw err;

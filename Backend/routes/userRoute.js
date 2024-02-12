@@ -4,12 +4,12 @@ const { updateUser } = require('../controllers/userUpdateController');
 const { getUser, getOneUser } = require('../controllers/userGetController')
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
 
-//upload.single('proPic')
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage: storage });
 
 router.get('/',  getUser);
 router.get('/:id',  getOneUser);
-router.put('/:id', updateUser)
+router.put('/:id', upload.single('proPic'), updateUser)
 
 module.exports = router;

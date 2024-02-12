@@ -6,7 +6,16 @@ exports.updateUser = async (req,res)=>{
     const { id } = req.params;
     
     try{
-        await user.findByIdAndUpdate(id, {userName});
+        let updateFields = { userName };
+
+        if (req.file) {
+            updateFields.proPic = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype
+            };
+        }
+
+        await user.findByIdAndUpdate(id, updateFields);
 
         res.status(201).json({ message: 'user updated successfully' });
 
