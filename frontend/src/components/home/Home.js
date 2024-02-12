@@ -15,10 +15,11 @@ function Home() {
   const [id, setId] = useState('');
   const [ income, setIncome ] = useState(null)
   const [ expense, setExpense ] = useState(null)
+  const [userId, setUserId] = useState('');
 
   return (
     <Box sx={{ display: 'flex', backgroundColor: '#F4F4F4', height: '100vh', position: 'relative' }}>
-      <SideBar userAccEdit={setUserEdit}/>
+      <SideBar userAccEdit={setUserEdit} userIdNum={setUserId}/>
 
       <Box
         sx={{
@@ -33,7 +34,7 @@ function Home() {
         }}
       ></Box>
 
-      <EditProfile open={userEdit} userAccEdit={setUserEdit}/>
+      <EditProfile open={userEdit} userAccEdit={setUserEdit} userIdNum={userId}/>
       <UpdatedForm open={recordEdit} recordEdit={setRecordEdit} recordId={id}/>
 
 

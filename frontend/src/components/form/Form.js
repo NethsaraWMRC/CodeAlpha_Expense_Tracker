@@ -61,7 +61,7 @@ function Form(props) {
         setPrice('');
 
       } catch (error) {
-        console.error('Error creating record:', error);
+        //console.error('Error creating record:', error);
         alert('Error adding record. Please try again later.');
       }
     }

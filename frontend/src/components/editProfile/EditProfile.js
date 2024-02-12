@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { Close, CloudUpload } from '@mui/icons-material'
 import { Box, Button, IconButton, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { fetchOneUser, updateUser } from '../../services/userService';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -18,6 +19,17 @@ const VisuallyHiddenInput = styled('input')({
 function EditProfile(props) {
   const [imageUrl, setImageUrl] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [userName, setUserName] = useState('');
+
+  useEffect(()=>{
+    fetchAUser();
+    
+  },[props.open])
+
+  const fetchAUser = async ()=>{
+    const user = await fetchOneUser(props.userIdNum)
+    setUserName(user.userName)
+  }
 
   const handleClosePress = () => {
     props.userAccEdit(false);
@@ -25,14 +37,25 @@ function EditProfile(props) {
     setImageUrl(null)
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if(imageUrl==null){
         setIsEmpty(true)
+
     }else{
+
+      try{
+        await updateUser({userName},props.userIdNum);
+        
         props.userAccEdit(false);
         console.log('Image URL:', imageUrl);
+        
         setImageUrl(null)
         setIsEmpty(false)
+
+      }catch(err){
+        alert('Error adding user. Please try again later.');
+      }
+    
     }
     
   };
@@ -73,7 +96,7 @@ function EditProfile(props) {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'space-between' }}>
           <Typography sx={{ fontFamily: 'poppins', fontSize: '14px', color: '#101318', width: '120px' }}>Name</Typography>
           <Typography>-</Typography>
-          <TextField id="outlined-basic" label="" variant="outlined" size='small' />
+          <TextField id="outlined-basic" label="" variant="outlined" size='small' value={userName} onChange={(e)=>setUserName(e.target.value)}/>
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px', gap: '10px', justifyContent: 'space-between' }}>

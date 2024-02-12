@@ -4,6 +4,7 @@ import proPic from '../../assests/propic.jpg'
 import { KeyboardArrowDown } from '@mui/icons-material';
 import { Calculation } from '../table/Calculation';
 import { fetchAllRecord } from '../../services/recordService';
+import { fetchUser } from '../../services/userService';
 // import logout from '../../assests/shutdown.png'
 
 function SideBar(props) {
@@ -13,14 +14,26 @@ function SideBar(props) {
     const [rows, setRows] = React.useState([]);
     const { totalIncome, totalExpense } = Calculation(rows, day);
 
+    const [ userName, setUserName ] = useState('')
+    const [ userId, setUserId ] = useState('');
+
     React.useEffect(()=>{
         fetchData();
+        getUser();
     },[rows])
 
   const fetchData = async ()=>{
     const data = await fetchAllRecord()
     setRows(data)
   }
+
+  const getUser = async ()=>{
+    const userData = await fetchUser()
+    setUserName(userData[0].userName)
+    setUserId(userData[0]._id)
+  }
+  
+  
 
     const handleOpenMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -33,6 +46,7 @@ function SideBar(props) {
     };
 
     const handlePress = ()=>{
+        props.userIdNum(userId)
         props.userAccEdit(true)
     }
 
@@ -45,7 +59,7 @@ function SideBar(props) {
                     <img src={proPic} style={{width:'100%', height:'auto',}} alt='proPic' onClick={handlePress}/>  
                 </Box>
 
-                <Typography sx={{marginTop:'10px', fontFamily:'poppins', fontSize:'18px', fontWeight:'500'}}>Ravindu Nethsara</Typography>
+                <Typography sx={{marginTop:'10px', fontFamily:'poppins', fontSize:'18px', fontWeight:'500'}}>{userName}</Typography>
 
             </Box>
 

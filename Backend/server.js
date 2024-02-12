@@ -20,13 +20,15 @@ mongoose.connect(URL);
 const connection = mongoose.connection;
 
 const recordRouter = require("./routes/recordsRoutes");
+const userRouter = require('./routes/userRoute')
 
 app.use("/record",recordRouter);
+app.use("/user",userRouter)
 
 connection.once("open", ()=>{
     console.log("MongoDB connection successful!");
 });
 
 app.listen(PORT, ()=>{
-    console.log("Server is running");
+    console.log("Server is running")
 })

@@ -14,7 +14,7 @@ exports.getOneRecord = async (req, res)=>{
     const { id } = req.params;
 
     try{
-        const getRecords = await record.findById(id);
+        const getRecords = await record.findById(id)
         res.json(getRecords)
 
     }catch(err){

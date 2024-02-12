@@ -1,15 +1,16 @@
 
 import { Close} from '@mui/icons-material'
 import { Box, IconButton,} from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from '../form/Form';
+import { fetchUser } from '../../services/userService';
 
 function UpdatedForm(props) {
 
   const handleClosePress = () => {
     props.recordEdit(false);
   };
-  
+
 
   return (
     <Box
