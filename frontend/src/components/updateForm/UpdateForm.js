@@ -34,7 +34,7 @@ function UpdatedForm(props) {
       </Box>
 
       <Box sx={{padding:'30px'}}>
-        <Form recordEdit={props.recordEdit}/>
+        <Form recordEdit={props.recordEdit} tag={'updateForm'} id={props.recordId}/>
       </Box>
       
 

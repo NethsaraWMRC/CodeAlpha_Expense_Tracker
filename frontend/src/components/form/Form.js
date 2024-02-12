@@ -1,5 +1,7 @@
 import { Box, MenuItem, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createRecord, updateRecord, fetchOneRecord } from '../../services/recordService';
+
 
 const categories = [
   { value: 'expense', label: 'Expense' },
@@ -7,30 +9,64 @@ const categories = [
 ];
 
 function Form(props) {
+
+  const date = new Date().toISOString().split('T')[0];
+
   const [description, setDescription] = useState('');
-  const [prize, setPrice] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('expense');
+  const [price, setPrice] = useState('');
+  const [category, setCategory] = useState('expense');
 
   const [isDescriptionEmpty, setIsDescriptionEmpty] = useState(false);
-  const [isprizeEmpty, setIsprizeEmpty] = useState(false);
+  const [ispriceEmpty, setIsPriceEmpty] = useState(false);
 
-  const handleSubmit = () => {
+  useEffect(()=>{
+    if(props.tag==="updateForm"){
+      fetchARecord();
+    }
+  },[props.id])
+
+  const fetchARecord = async ()=>{
+    const data = await fetchOneRecord(props.id);
+    setPrice(data.price);
+    setDescription(data.description);
+    setCategory(data.category);
+
+  }
+
+  const handleSubmit = async () => {
     if (description.trim() === '') {
       setIsDescriptionEmpty(true);
-    } else if (prize.trim() === '') {
-      setIsprizeEmpty(true);
+
+    } else if (price === '') {
+      setIsPriceEmpty(true);
       setIsDescriptionEmpty(false);
 
     } else {
-      alert('Record is added');
-      setIsprizeEmpty(false);
-      setIsDescriptionEmpty(false);
-      setDescription('')
-      setPrice('')
-      props.recordEdit(false)
-      
+      try {
+
+        if(props.tag==='updateForm'){
+          await updateRecord({ price, description, category, date }, props.id);
+          
+          alert('Record is updated');
+          props.recordEdit(false)
+
+        }else{
+          await createRecord({ price, description, category, date });
+          alert('Record is added');
+        }
+
+        setIsPriceEmpty(false);
+        setIsDescriptionEmpty(false);
+        setDescription('');
+        setPrice('');
+
+      } catch (error) {
+        console.error('Error creating record:', error);
+        alert('Error adding record. Please try again later.');
+      }
     }
   };
+  
 
   return (
     
@@ -50,15 +86,15 @@ function Form(props) {
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '20px', justifyContent: 'space-between' }}>
-          <Typography sx={{ fontFamily: 'poppins', fontSize: '14px', color: '#101318', width: '120px' }}>prize</Typography>
+          <Typography sx={{ fontFamily: 'poppins', fontSize: '14px', color: '#101318', width: '120px' }}>price</Typography>
           <Typography>-</Typography>
           <TextField
-            error={isprizeEmpty}
+            error={ispriceEmpty}
             id="outlined-basic"
             label=""
             variant="outlined"
             size="small"
-            value={prize}
+            value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
         </Box>
@@ -69,8 +105,8 @@ function Form(props) {
           <TextField
             id="outlined-select-category"
             select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
             variant="outlined"
             size="small"
           >

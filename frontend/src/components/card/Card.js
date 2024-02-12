@@ -14,7 +14,7 @@ function Card(props) {
         }}>
       <Box>
         <Typography sx={{fontFamily:'poppins', fontSize:'16px', fontWeight:'500', color:'#40495B'}}>Today {props.tag}</Typography>
-        <Typography sx={{fontFamily:'poppins', fontSize:'32px', fontWeight:'600', color:'#40495B', marginTop:'10px'}}>{props.price}</Typography>
+        <Typography sx={{fontFamily:'poppins', fontSize:'32px', fontWeight:'600', color:'#40495B', marginTop:'10px'}}>Rs. {props.price}</Typography>
       </Box>
     
       <img style={{width:'100px', height:'100px'}} src={props.img} alt='moneyBag'/>

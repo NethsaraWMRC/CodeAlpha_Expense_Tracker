@@ -12,10 +12,13 @@ import UpdatedForm from '../updateForm/UpdateForm'
 function Home() {
   const [userEdit, setUserEdit] = useState(false);
   const [recordEdit, setRecordEdit] = useState(false);
+  const [id, setId] = useState('');
+  const [ income, setIncome ] = useState(null)
+  const [ expense, setExpense ] = useState(null)
 
   return (
     <Box sx={{ display: 'flex', backgroundColor: '#F4F4F4', height: '100vh', position: 'relative' }}>
-      <SideBar userAccEdit={setUserEdit} />
+      <SideBar userAccEdit={setUserEdit}/>
 
       <Box
         sx={{
@@ -31,17 +34,17 @@ function Home() {
       ></Box>
 
       <EditProfile open={userEdit} userAccEdit={setUserEdit}/>
-      <UpdatedForm open={recordEdit} recordEdit={setRecordEdit}/>
+      <UpdatedForm open={recordEdit} recordEdit={setRecordEdit} recordId={id}/>
 
 
       <Box sx={{ padding: '20px' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-          <Card img={moneyBag} price={'Rs. 200'} tag={'Income'} />
-          <Card img={money} price={'Rs. 1600'} tag={'Expense'} />
+          <Card img={moneyBag} price={income} tag={'Income'} />
+          <Card img={money} price={expense} tag={'Expense'} />
         </Box>
 
         <Box>
-          <DataTable recordEdit={setRecordEdit}/>
+          <DataTable recordEdit={setRecordEdit} recordId={setId} income={setIncome} expense={setExpense}/>
         </Box>
         
       </Box>

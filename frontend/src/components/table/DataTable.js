@@ -9,6 +9,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Box, IconButton, Menu, MenuItem } from '@mui/material';
 import { Delete, Edit, KeyboardArrowDown } from '@mui/icons-material';
+import { fetchAllRecord, deleteRecord } from '../../services/recordService';
+import { Calculation } from './Calculation';
 
 const columns = [
   { id: 'description', label: 'Description', minWidth: 250 },
@@ -34,28 +36,26 @@ const columns = [
   },
 ];
 
-function createData(description, price, category) {
-  return { description, price, category };
-}
-
-const rows = [
-  createData('lunch', 170, 'expense'),
-  createData('bank', 450, 'income'),
-  createData('breakfast', 100, 'expense'),
-  createData('dinner', 260, 'expense'),
-  createData('found', 900, 'income'),
-  createData('lunch', 170, 'expense'),
-  createData('bank', 450, 'income'),
-  createData('breakfast', 100, 'expense'),
-  createData('dinner', 260, 'expense'),
-  createData('found', 900, 'income'),
-];
 
 export default function DataTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [filterCategory, setFilterCategory] = React.useState(null);
+  const [rows, setRows] = React.useState([]);
+  const { totalIncome, totalExpense } = Calculation(rows, 'today');
+
+  React.useEffect(()=>{
+    fetchData();
+    
+    props.income(totalIncome);
+    props.expense(totalExpense);
+  },[rows])
+
+  const fetchData = async ()=>{
+    const data = await fetchAllRecord()
+    setRows(data)
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -66,15 +66,17 @@ export default function DataTable(props) {
     setPage(0);
   };
 
-  const handleDelete = (index) => {
-    // Implement delete functionality here using the index
-    console.log('Delete row at index:', index);
+  const handleDelete = async (id) => {
+    try{
+      await deleteRecord(id)
+    }catch(err){
+      alert("Error deleting")
+    }
   };
 
-  const handleEdit = (index) => {
-    // Implement edit functionality here using the index
-    console.log('Edit row at index:', index);
+  const handleEdit = (id) => {
     props.recordEdit(true)
+    props.recordId(id)
   };
 
   const handleCategoryFilterClick = (event) => {
@@ -141,11 +143,11 @@ export default function DataTable(props) {
                         <TableCell key={column.id} align={column.align}>
                           {column.id === 'Options' ? (
                             <Box>
-                              <IconButton aria-label="edit" onClick={() => handleEdit(rowIndex)}>
+                              <IconButton aria-label="edit" onClick={() => handleEdit(row._id)}>
                                 <Edit />
                               </IconButton>
                               
-                              <IconButton aria-label="delete" onClick={() => handleDelete(rowIndex)}>
+                              <IconButton aria-label="delete" onClick={() => handleDelete(row._id)}>
                                 <Delete />
                               </IconButton>
                             </Box>

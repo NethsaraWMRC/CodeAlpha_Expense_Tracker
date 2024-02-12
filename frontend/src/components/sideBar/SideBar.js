@@ -2,11 +2,25 @@ import React, { useState } from 'react'
 import {Box, IconButton, Menu, MenuItem, Typography} from '@mui/material'
 import proPic from '../../assests/propic.jpg'
 import { KeyboardArrowDown } from '@mui/icons-material';
+import { Calculation } from '../table/Calculation';
+import { fetchAllRecord } from '../../services/recordService';
 // import logout from '../../assests/shutdown.png'
 
 function SideBar(props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [day, setDay] = useState('Last 7 Days')
+
+    const [rows, setRows] = React.useState([]);
+    const { totalIncome, totalExpense } = Calculation(rows, day);
+
+    React.useEffect(()=>{
+        fetchData();
+    },[rows])
+
+  const fetchData = async ()=>{
+    const data = await fetchAllRecord()
+    setRows(data)
+  }
 
     const handleOpenMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -15,6 +29,7 @@ function SideBar(props) {
     const handleCloseMenu = (item) => {
         setDay(item)
         setAnchorEl(null);
+        
     };
 
     const handlePress = ()=>{
@@ -61,12 +76,12 @@ function SideBar(props) {
                 </Box>
                 <Box sx={{display:'flex',justifyContent:'space-between', fontFamily:'poppins', fontSize:'16px', marginBottom:'20px'}}>
                     <Typography sx={{color:'#101318'}}>Total Income -</Typography>
-                    <Typography sx={{color:'#00DD3E', fontWeight:'600'}}>Rs. 560</Typography>
+                    <Typography sx={{color:'#00DD3E', fontWeight:'600'}}>Rs. {totalIncome}</Typography>
                 </Box> 
 
                 <Box sx={{display:'flex',justifyContent:'space-between', fontFamily:'poppins', fontSize:'16px'}}>
                     <Typography sx={{color:'#101318'}}>Total Expense -</Typography>
-                    <Typography sx={{color:'#FF7043', fontWeight:'600'}}>Rs. 1320</Typography>
+                    <Typography sx={{color:'#FF7043', fontWeight:'600'}}>Rs. {totalExpense}</Typography>
                 </Box>     
             </Box>
             
