@@ -9,7 +9,7 @@ import { fetchUser } from '../../services/userService';
 
 function SideBar(props) {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [day, setDay] = useState('Last 7 Days')
+    const [day, setDay] = useState('Yesterday')
 
     const [rows, setRows] = React.useState([]);
     const { totalIncome, totalExpense } = Calculation(rows, day);
@@ -87,6 +87,7 @@ function SideBar(props) {
                     </IconButton>
 
                     <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu} elevation={0}>
+                        <MenuItem onClick={()=>handleCloseMenu('Yesterday')}>Yesterday</MenuItem>
                         <MenuItem onClick={()=>handleCloseMenu('Last 7 Days')}>Last 7 Days</MenuItem>
                         <MenuItem onClick={()=>handleCloseMenu('Last Month')}>Last Month</MenuItem>
                         <MenuItem onClick={()=>handleCloseMenu('Last 3 Months')}>Last 3 Months</MenuItem>

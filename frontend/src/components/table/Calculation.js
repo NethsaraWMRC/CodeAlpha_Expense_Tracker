@@ -14,6 +14,8 @@ export const Calculation = (rows, pastDate) => {
         thatDay.setMonth(thatDay.getMonth() - 3); 
     } else if (pastDate === 'Last Year') {
         thatDay.setFullYear(thatDay.getFullYear() - 1); 
+    }else if (pastDate === 'Yesterday') {
+        thatDay.setDate(thatDay.getDate() - 1);
     }
 
     rows.forEach((row) => {
